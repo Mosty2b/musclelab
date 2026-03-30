@@ -1,733 +1,159 @@
 /* ============================================
-   MUSCLEMAP — style médical / anatomique
-   Palette: ivoire, lin, craie + rouge sang
+   MUSCLEMAP — Design Organique & Animé
    ============================================ */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --cream: #F5F2ED;
-  --linen: #EBE7E0;
-  --parchment: #E2DDD6;
-  --border: #D0CCC4;
-  --border-light: #E0DCD5;
-  --text-primary: #2A2824;
-  --text-secondary: #6B6860;
-  --text-muted: #9B9890;
-  --accent-red: #C0392B;
-  --accent-red-light: #FADBD8;
-  --accent-red-mid: #E74C3C;
-  --muscle-default: #DDD9D1;
-  --muscle-hover: #CBB89C;
-  --muscle-active: #C0392B;
-  --muscle-secondary: #E8A89A;
-  --white: #FDFCFA;
-  --shadow-sm: 0 1px 4px rgba(42,40,36,0.06);
-  --shadow-md: 0 4px 16px rgba(42,40,36,0.10);
-  --radius: 10px;
-  --radius-sm: 6px;
-  --font-body: 'DM Sans', system-ui, sans-serif;
-  --font-display: 'DM Serif Display', Georgia, serif;
+  /* Palette Organique & Naturelle */
+  --bg-color: #F8F6F2;
+  --panel-bg: #FFFFFF;
+  --border: #E8E3DA;
+  --text-primary: #2C2825;
+  --text-secondary: #7A736C;
+  --text-muted: #A39C95;
+  
+  /* Couleurs Muscles (Effet Biologique) */
+  --skin-tone: #EAD8C7; 
+  --muscle-default: #DECCBB;
+  --muscle-hover: #D4B69C;
+  --muscle-active: #C0392B; /* Rouge sang vif */
+  --muscle-secondary: #E57373; /* Rouge rosé doux */
+  
+  --shadow-sm: 0 2px 8px rgba(44, 40, 37, 0.05);
+  --shadow-md: 0 8px 24px rgba(44, 40, 37, 0.08);
+  --shadow-lg: 0 12px 32px rgba(192, 57, 43, 0.15); /* Ombre rouge pour l'accentuation */
+  
+  --radius: 12px;
+  --radius-sm: 8px;
+  
+  /* Animations */
+  --smooth: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-html, body {
-  height: 100%;
-  background: var(--cream);
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--bg-color);
   color: var(--text-primary);
-  font-family: var(--font-body);
-  font-size: 14px;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
-/* ── HEADER ── */
-.site-header {
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
-  padding: 18px 32px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  flex-wrap: wrap;
-}
-
-.header-inner {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.logo-mark {
-  width: 30px;
-  height: 30px;
-  background: var(--accent-red);
-  color: white;
-  border-radius: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 17px;
-  font-style: italic;
-  flex-shrink: 0;
-}
-
-.logo-text {
-  font-family: var(--font-display);
-  font-size: 20px;
-  letter-spacing: -0.3px;
-  color: var(--text-primary);
-}
-
-.header-sub {
-  font-size: 13px;
-  color: var(--text-muted);
-  flex: 1;
-}
-
-.header-stats {
-  font-size: 12px;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.dot { color: var(--border); }
-
-/* ── LAYOUT ── */
+/* Layout */
 .app-layout {
-  display: grid;
-  grid-template-columns: 460px 1fr;
-  grid-template-rows: 1fr;
-  height: calc(100vh - 70px);
-  overflow: hidden;
-  position: relative;
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  gap: 24px;
+  height: calc(100vh - 80px); /* Ajuster selon le header */
 }
 
-/* ── BODY PANEL ── */
-.body-panel {
-  background: var(--white);
-  border-right: 1px solid var(--border);
+.body-panel, .exercise-panel, .detail-panel {
+  background: var(--panel-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
-.body-panel-header {
-  padding: 18px 24px 14px;
-  border-bottom: 1px solid var(--border-light);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-}
+.body-panel { flex: 1; position: relative; }
+.exercise-panel { flex: 1; position: relative; overflow: hidden; }
 
-.panel-title {
-  font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 400;
-  color: var(--text-primary);
-  letter-spacing: -0.2px;
-}
-
-.view-toggle {
-  display: flex;
-  background: var(--linen);
-  border-radius: var(--radius-sm);
-  padding: 3px;
-  gap: 2px;
-}
-
-.view-btn {
-  padding: 5px 12px;
-  border: none;
-  background: transparent;
-  border-radius: 4px;
-  font-size: 12px;
-  font-family: var(--font-body);
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.18s ease;
-}
-
-.view-btn.active {
-  background: var(--white);
-  color: var(--text-primary);
-  box-shadow: var(--shadow-sm);
-}
-
-.body-figures {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  padding: 16px;
-  overflow: hidden;
-}
-
-.body-figure {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
+/* Styles Organiques pour les SVG (Muscles) */
 .body-figure svg {
-  max-height: 100%;
-  max-width: 100%;
-  height: 100%;
-}
-
-.body-figure.hidden { display: none; }
-
-/* SVG muscle hover & active states */
-.muscle-group[data-muscle]:not([data-muscle="none"]) {
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.muscle-group[data-muscle]:not([data-muscle="none"]):hover path,
-.muscle-group[data-muscle]:not([data-muscle="none"]):hover ellipse,
-.muscle-group[data-muscle]:not([data-muscle="none"]):hover rect {
-  fill: var(--muscle-hover) !important;
-  transition: fill 0.18s ease;
-}
-
-.muscle-group.muscle-active path,
-.muscle-group.muscle-active ellipse,
-.muscle-group.muscle-active rect {
-  fill: var(--muscle-active) !important;
-  transition: fill 0.25s ease;
-}
-
-.muscle-group.muscle-secondary path,
-.muscle-group.muscle-secondary ellipse,
-.muscle-group.muscle-secondary rect {
-  fill: var(--muscle-secondary) !important;
-  transition: fill 0.25s ease;
-}
-
-.muscle-badge {
-  margin: 0 24px 18px;
-  padding: 8px 14px;
-  background: var(--linen);
-  border-radius: var(--radius-sm);
-  font-size: 12px;
-  color: var(--text-secondary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-  transition: all 0.2s ease;
-}
-
-.muscle-badge.active {
-  background: var(--accent-red-light);
-  color: var(--accent-red);
-}
-
-.badge-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--border);
-  flex-shrink: 0;
-  transition: background 0.2s ease;
-}
-
-.muscle-badge.active .badge-dot { background: var(--accent-red); }
-
-/* ── EXERCISE PANEL ── */
-.exercise-panel {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background: var(--cream);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.exercise-panel.panel-hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(20px);
-}
-
-.exercise-panel-header {
-  padding: 18px 24px 14px;
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-}
-
-.filter-tabs {
-  display: flex;
-  gap: 4px;
-  background: var(--linen);
-  border-radius: var(--radius-sm);
-  padding: 3px;
-}
-
-.filter-btn {
-  padding: 5px 14px;
-  border: none;
-  background: transparent;
-  border-radius: 4px;
-  font-size: 12px;
-  font-family: var(--font-body);
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.18s ease;
-}
-
-.filter-btn.active {
-  background: var(--white);
-  color: var(--text-primary);
-  box-shadow: var(--shadow-sm);
-}
-
-.exercise-search {
-  padding: 14px 24px;
-  background: var(--white);
-  border-bottom: 1px solid var(--border-light);
-  flex-shrink: 0;
-}
-
-.exercise-search input {
   width: 100%;
-  padding: 8px 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--cream);
-  font-family: var(--font-body);
-  font-size: 13px;
-  color: var(--text-primary);
-  outline: none;
-  transition: border-color 0.18s ease;
+  height: auto;
+  max-height: 60vh;
+  filter: url(#organic-shadow); /* Ajoute du volume */
 }
 
-.exercise-search input:focus { border-color: var(--accent-red-mid); }
-.exercise-search input::placeholder { color: var(--text-muted); }
-
-.exercise-list {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px 24px 24px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-}
-
-.exercise-list::-webkit-scrollbar { width: 4px; }
-.exercise-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-/* Group sections */
-.group-section {
-  margin-bottom: 8px;
-}
-
-.group-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 0 8px;
+.muscle-group {
+  fill: var(--muscle-default);
+  transition: fill var(--smooth), transform var(--smooth);
   cursor: pointer;
-  user-select: none;
-  position: sticky;
-  top: 0;
-  background: var(--cream);
-  z-index: 1;
+  transform-origin: center;
 }
 
-.group-chevron {
-  width: 16px;
-  height: 16px;
-  color: var(--text-muted);
-  transition: transform 0.2s ease;
-  flex-shrink: 0;
+.muscle-group:hover {
+  fill: var(--muscle-hover);
 }
 
-.group-header.collapsed .group-chevron { transform: rotate(-90deg); }
-
-.group-name {
-  font-family: var(--font-display);
-  font-size: 14px;
-  color: var(--text-primary);
-  letter-spacing: -0.1px;
+/* Muscles ciblés avec animation de pulsation */
+.muscle-group.muscle-active {
+  fill: var(--muscle-active);
+  animation: pulse-blood 2s infinite ease-in-out;
 }
 
-.group-count {
-  font-size: 11px;
-  color: var(--text-muted);
-  background: var(--linen);
-  padding: 2px 7px;
-  border-radius: 10px;
-  margin-left: auto;
+.muscle-group.muscle-secondary {
+  fill: var(--muscle-secondary);
+  animation: pulse-blood-light 2.5s infinite ease-in-out;
 }
 
-.group-muscle-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--muscle-active);
-  opacity: 0.4;
-  flex-shrink: 0;
+/* Animations de respiration & flux sanguin */
+@keyframes pulse-blood {
+  0% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.02); filter: brightness(1.1); }
+  100% { transform: scale(1); filter: brightness(1); }
 }
 
-.group-exercises {
-  overflow: hidden;
-  transition: max-height 0.3s ease, opacity 0.2s ease;
-  max-height: 1000px;
+@keyframes pulse-blood-light {
+  0% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.01); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.9; }
+}
+
+.breathing-animation {
+  animation: breathe 6s infinite ease-in-out;
+}
+
+@keyframes breathe {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Panneau de détails (Slide-in depuis la droite) */
+.detail-panel {
+  position: absolute;
+  top: 0; right: -100%;
+  width: 100%; height: 100%;
+  background: var(--panel-bg);
+  transition: right var(--smooth);
+  z-index: 10;
+  overflow-y: auto;
+  opacity: 0;
+}
+
+.detail-panel.open {
+  right: 0;
   opacity: 1;
 }
 
-.group-exercises.collapsed {
-  max-height: 0;
-  opacity: 0;
+/* Liste et boutons */
+.exercise-list {
+  overflow-y: auto;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* Exercise card */
 .exercise-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 11px 14px;
-  background: var(--white);
-  border: 1px solid var(--border-light);
+  padding: 16px;
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  margin-bottom: 5px;
   cursor: pointer;
-  transition: all 0.18s ease;
-  position: relative;
+  transition: all var(--smooth);
+  background: white;
 }
 
 .exercise-card:hover {
-  border-color: var(--border);
+  border-color: var(--muscle-active);
   box-shadow: var(--shadow-sm);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
-.exercise-card.highlighted {
-  border-color: var(--accent-red-mid);
-  background: #FEF8F7;
-}
-
-.exercise-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-sm);
-  background: var(--linen);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  flex-shrink: 0;
-}
-
-.exercise-info { flex: 1; min-width: 0; }
-
-.exercise-name {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.exercise-sub {
-  font-size: 11px;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 2px;
-}
-
-.type-badge {
-  padding: 1px 6px;
-  border-radius: 3px;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-}
-
-.type-badge.free { background: #E8F5E9; color: #2E7D32; }
-.type-badge.machine { background: #E3F2FD; color: #1565C0; }
-
-.exercise-arrow {
-  color: var(--text-muted);
-  flex-shrink: 0;
-  transition: transform 0.18s ease, color 0.18s ease;
-}
-
-.exercise-card:hover .exercise-arrow {
-  transform: translateX(2px);
-  color: var(--accent-red);
-}
-
-/* No results */
-.no-results {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--text-muted);
-  font-size: 13px;
-}
-
-/* ── DETAIL PANEL ── */
-.detail-panel {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: calc(100% - 460px);
-  height: 100%;
-  background: var(--white);
-  display: flex;
-  flex-direction: column;
-  transform: translateX(100%);
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 10;
-  border-left: 1px solid var(--border);
-  overflow-y: auto;
-}
-
-.detail-panel.open { transform: translateX(0); }
-
-.back-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 18px 24px;
-  border: none;
-  border-bottom: 1px solid var(--border-light);
-  background: transparent;
-  font-family: var(--font-body);
-  font-size: 13px;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: color 0.18s ease;
-  text-align: left;
-  flex-shrink: 0;
-}
-
-.back-btn:hover { color: var(--accent-red); }
-
-.detail-content {
-  padding: 28px 32px;
-  flex: 1;
-}
-
-.detail-header {
-  margin-bottom: 28px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border-light);
-}
-
-.detail-exercise-name {
-  font-family: var(--font-display);
-  font-size: 26px;
-  letter-spacing: -0.5px;
-  color: var(--text-primary);
-  margin-bottom: 8px;
-  line-height: 1.2;
-}
-
-.detail-meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.detail-badge {
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-}
-
-.detail-badge.free { background: #E8F5E9; color: #2E7D32; }
-.detail-badge.machine { background: #E3F2FD; color: #1565C0; }
-.detail-badge.difficulty {
-  background: var(--linen);
-  color: var(--text-secondary);
-}
-
-/* Muscles section */
-.muscles-section {
-  margin-bottom: 28px;
-}
-
-.section-label {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 12px;
-}
-
-.muscles-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.muscle-tag {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.muscle-tag.primary {
-  background: var(--accent-red-light);
-  color: var(--accent-red);
-  border: 1px solid #F5A59A;
-}
-
-.muscle-tag.secondary {
-  background: var(--linen);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-}
-
-.muscle-tag-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: currentColor;
-}
-
-/* Execution guide */
-.guide-section {
-  margin-bottom: 28px;
-}
-
-.guide-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 12px;
-}
-
-.guide-step {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
-
-.step-number {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--accent-red);
-  color: white;
-  font-size: 11px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-
-.step-text {
-  font-size: 13px;
-  color: var(--text-primary);
-  line-height: 1.6;
-  padding-top: 2px;
-}
-
-/* Tips */
-.tips-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.tip-card {
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.tip-card.equipment {
-  background: var(--linen);
-  border: 1px solid var(--border-light);
-  color: var(--text-secondary);
-}
-
-.tip-card.tip {
-  background: #FEF9E7;
-  border: 1px solid #FDEBD0;
-  color: #7D6608;
-}
-
-.tip-label {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  margin-bottom: 5px;
-  opacity: 0.7;
-}
-
-/* Related exercises */
-.related-section { margin-top: 8px; }
-
-.related-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 10px;
-}
-
-.related-tag {
-  padding: 5px 12px;
-  background: var(--cream);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  font-size: 12px;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.18s ease;
-}
-
-.related-tag:hover {
-  background: var(--accent-red-light);
-  border-color: var(--accent-red-mid);
-  color: var(--accent-red);
-}
-
-/* ── SCROLLBAR ── */
-.detail-panel::-webkit-scrollbar { width: 4px; }
-.detail-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-  .app-layout {
-    grid-template-columns: 1fr;
-    grid-template-rows: 50vh 1fr;
-  }
-  .body-panel { border-right: none; border-bottom: 1px solid var(--border); }
-  .detail-panel { width: 100%; }
-}
+.hidden { display: none !important; }
+.panel-hidden { opacity: 0; pointer-events: none; }
